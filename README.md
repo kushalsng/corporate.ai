@@ -19,27 +19,6 @@ A full-stack Retrieval-Augmented Generation (RAG) application designed to stream
 
 The application follows a classic 3-tier architecture enhanced with AI capabilities.
 
-```mermaid
-graph TD
-    User[User] -->|Interacts| UI[React Frontend]
-    UI -->|HTTP POST /chat| API[Spring Boot Backend]
-    UI -->|HTTP POST /ingest| API
-    
-    subgraph "Backend Services"
-        API -->|Delegates| Controller[RagController]
-        Controller -->|Uses| Ingest[IngestionService]
-        Controller -->|Uses| RAG[RagService]
-        
-        Ingest -->|1. Parse & Split| Tika[Apache Tika Reader]
-        Ingest -->|2. Embed & Store| VectorDB[(PostgreSQL + pgvector)]
-        
-        RAG -->|1. Similarity Search| VectorDB
-        RAG -->|2. Retrieve Context| VectorDB
-        RAG -->|3. Construct Prompt| Prompt[System Prompt Template]
-        RAG -->|4. Generate Answer| LLM[LLM Provider (OpenAI)]
-    end
-```
-
 ### Detailed Data Flow
 
 #### A. Document Ingestion Pipeline
